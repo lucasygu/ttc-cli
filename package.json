@@ -48,7 +48,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasygu/ttc.git"
+    "url": "git+https://github.com/lucasygu/ttc-cli.git"
   },
   "dependencies": {
     "commander": "^13.1.0",
