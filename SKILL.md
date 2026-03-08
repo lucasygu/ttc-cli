@@ -2,7 +2,7 @@
 description: Real-time Toronto transit — bus & streetcar arrivals, vehicle tracking, alerts, stop search
 allowed-tools: Bash, Read
 name: ttc
-version: 0.1.0
+version: 0.1.3
 metadata:
   openclaw:
     requires:
@@ -43,7 +43,8 @@ ttc route 504                     # Route info + active vehicles
 ttc vehicles 504                  # Live positions on a route
 ttc alerts                        # Service alerts
 ttc alerts --broad                # Include subway alerts
-ttc nearby 43.6426,-79.4002       # Nearest stops + arrivals
+ttc nearby                        # Auto-detect location (macOS)
+ttc nearby 43.6426,-79.4002       # Or provide coordinates
 ttc stops 504                     # Active stops on a route
 ttc routes                        # List all surface routes
 ttc routes --type streetcar       # Filter by type
@@ -65,8 +66,8 @@ Live vehicle positions. Shows fleet number, route, status, current stop, and occ
 ### `ttc alerts [route]`
 Service disruptions and alerts. Use `--broad` for subway alerts too.
 
-### `ttc nearby <lat,lng>`
-Find nearest stops and their upcoming arrivals. Default 500m radius.
+### `ttc nearby [lat,lng]`
+Find nearest stops and their upcoming arrivals. Default 500m radius. On macOS, auto-detects your location if no coordinates are provided.
 
 ### `ttc routes`
 List all surface routes. Filter with `--type bus` or `--type streetcar`.
