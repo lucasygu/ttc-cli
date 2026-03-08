@@ -50,6 +50,7 @@ ttc routes                        # List all surface routes
 ttc routes --type streetcar       # Filter by type
 ttc search "broadview station"    # Fuzzy stop search
 ttc status                        # System overview
+ttc loop 3m nearby                # Live monitor (refreshes every 3m)
 ```
 
 ## Commands
@@ -86,15 +87,16 @@ System overview: active vehicles, active routes, alert count, static data freshn
 All commands support:
 - `--json` — Output as JSON for agent/script consumption
 
-## Live Monitoring with `/loop`
+### `ttc loop <interval> <command> [args...]`
+Re-run any ttc command on an interval. Clears screen and refreshes automatically. Ctrl+C to stop.
 
-Combine with Claude Code's `/loop` command for real-time monitoring:
+Interval format: `30s`, `3m`, `1h`, or just seconds (e.g. `180`).
 
 ```bash
-/loop 3m /ttc next "king spadina"    # Watch arrivals while getting ready
-/loop 5m /ttc alerts                 # Monitor disruptions during storms
-/loop 2m /ttc vehicles 504           # Track vehicles approaching your stop
-/loop 3m /ttc nearby                 # Refresh nearby arrivals as you walk
+ttc loop 3m next "king spadina"    # Watch arrivals while getting ready
+ttc loop 5m alerts                 # Monitor disruptions during storms
+ttc loop 2m vehicles 504           # Track vehicles approaching your stop
+ttc loop 30s nearby                # Refresh nearby arrivals as you walk
 ```
 
 ## Data Sources
