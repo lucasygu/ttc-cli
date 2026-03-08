@@ -32,6 +32,7 @@ import {
   getTripsForRoute,
   loadStops,
 } from "./lib/gtfs.js";
+import { getDeviceLocation, isLocationAvailable } from "./lib/location.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(
@@ -371,26 +372,53 @@ alertsCmd.action(
 // ─── nearby ──────────────────────────────────────────────────────────────────
 
 const nearbyCmd = program
-  .command("nearby <coordinates>")
-  .description("Nearest stops and upcoming arrivals (lat,lng)")
+  .command("nearby [coordinates]")
+  .description("Nearest stops and upcoming arrivals (auto-detects location on macOS)")
   .option("--radius <meters>", "Search radius in meters", "500")
   .option("--limit <n>", "Max stops to show", "5");
 addJsonOption(nearbyCmd);
 
 nearbyCmd.action(
   async (
-    coordinates: string,
+    coordinates: string | undefined,
     opts: { radius: string; limit: string; json?: boolean }
   ) => {
     try {
-      const [latStr, lngStr] = coordinates.split(",");
-      const lat = parseFloat(latStr);
-      const lng = parseFloat(lngStr);
+      let lat: number;
+      let lng: number;
 
-      if (isNaN(lat) || isNaN(lng)) {
-        console.error(kleur.red("Invalid coordinates. Use format: lat,lng"));
-        console.error(kleur.dim("Example: ttc nearby 43.6426,-79.4002"));
-        process.exit(1);
+      if (coordinates) {
+        const [latStr, lngStr] = coordinates.split(",");
+        lat = parseFloat(latStr);
+        lng = parseFloat(lngStr);
+
+        if (isNaN(lat) || isNaN(lng)) {
+          console.error(kleur.red("Invalid coordinates. Use format: lat,lng"));
+          console.error(kleur.dim("Example: ttc nearby 43.6426,-79.4002"));
+          process.exit(1);
+        }
+      } else {
+        if (!isLocationAvailable()) {
+          console.error(kleur.red("No coordinates provided and location detection unavailable."));
+          console.error(kleur.dim("Usage: ttc nearby <lat,lng>"));
+          console.error(kleur.dim("Location auto-detect requires macOS with Xcode Command Line Tools."));
+          process.exit(1);
+        }
+        if (!opts.json) {
+          process.stderr.write(kleur.dim("Detecting location..."));
+        }
+        try {
+          const loc = await getDeviceLocation();
+          lat = loc.latitude;
+          lng = loc.longitude;
+          if (!opts.json) {
+            process.stderr.write(`\r${kleur.green("✓")} Location: ${lat.toFixed(4)}, ${lng.toFixed(4)}\n`);
+          }
+        } catch (locErr: any) {
+          if (!opts.json) process.stderr.write("\n");
+          console.error(kleur.red(locErr.message));
+          process.exit(1);
+        }
       }
 
       const radius = parseInt(opts.radius) || 500;
