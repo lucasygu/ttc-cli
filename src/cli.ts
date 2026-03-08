@@ -7,7 +7,8 @@
  *   ttc route 504                    # Route info + active vehicles
  *   ttc vehicles 504                 # Live vehicle positions
  *   ttc alerts                       # Service disruptions
- *   ttc nearby 43.6426,-79.4002      # Nearest stops
+ *   ttc nearby                       # Auto-detect location (macOS)
+ *   ttc nearby 43.6426,-79.4002      # Nearest stops (manual)
  *   ttc stops 504                    # All stops on a route
  *   ttc routes                       # List all routes
  *   ttc search "broadview"           # Fuzzy search stops
@@ -47,7 +48,24 @@ program
   .description(
     "CLI for Toronto Transit Commission — real-time bus & streetcar tracking"
   )
-  .version(pkg.version);
+  .version(pkg.version)
+  .addHelpText(
+    "after",
+    `
+Examples:
+  $ ttc next "king spadina"           Next arrivals at a stop
+  $ ttc route 504                     Route info + active vehicles
+  $ ttc nearby                        Auto-detect location (macOS)
+  $ ttc nearby 43.6426,-79.4002       Nearest stops with coordinates
+  $ ttc alerts                        Service disruptions
+  $ ttc vehicles 504                  Live vehicle positions
+
+Live monitoring with Claude Code /loop:
+  /loop 3m /ttc next "king spadina"   Watch arrivals while getting ready
+  /loop 5m /ttc alerts                Monitor disruptions during storms
+  /loop 2m /ttc vehicles 504          Track vehicles approaching your stop
+  /loop 3m /ttc nearby                Refresh nearby arrivals as you walk`
+  );
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 

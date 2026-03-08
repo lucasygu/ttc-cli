@@ -86,6 +86,17 @@ System overview: active vehicles, active routes, alert count, static data freshn
 All commands support:
 - `--json` — Output as JSON for agent/script consumption
 
+## Live Monitoring with `/loop`
+
+Combine with Claude Code's `/loop` command for real-time monitoring:
+
+```bash
+/loop 3m /ttc next "king spadina"    # Watch arrivals while getting ready
+/loop 5m /ttc alerts                 # Monitor disruptions during storms
+/loop 2m /ttc vehicles 504           # Track vehicles approaching your stop
+/loop 3m /ttc nearby                 # Refresh nearby arrivals as you walk
+```
+
 ## Data Sources
 
 - **Real-time**: GTFS-RT protobuf feeds from `bustime.ttc.ca` (no auth)
