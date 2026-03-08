@@ -28,7 +28,7 @@ ttc alerts --broad    # include subway alerts
 
 # Nearby stops + arrivals (auto-detects location on macOS)
 ttc nearby
-ttc nearby 43.6426,-79.4002   # or provide coordinates
+ttc nearby 43.6453,-79.3806   # or provide coordinates
 
 # All surface routes
 ttc routes

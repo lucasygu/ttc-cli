@@ -8,7 +8,7 @@
  *   ttc vehicles 504                 # Live vehicle positions
  *   ttc alerts                       # Service disruptions
  *   ttc nearby                       # Auto-detect location (macOS)
- *   ttc nearby 43.6426,-79.4002      # Nearest stops (manual)
+ *   ttc nearby 43.6453,-79.3806      # Nearest stops (manual)
  *   ttc stops 504                    # All stops on a route
  *   ttc routes                       # List all routes
  *   ttc search "broadview"           # Fuzzy search stops
@@ -56,7 +56,7 @@ Examples:
   $ ttc next "king spadina"           Next arrivals at a stop
   $ ttc route 504                     Route info + active vehicles
   $ ttc nearby                        Auto-detect location (macOS)
-  $ ttc nearby 43.6426,-79.4002       Nearest stops with coordinates
+  $ ttc nearby 43.6453,-79.3806       Nearest stops with coordinates
   $ ttc alerts                        Service disruptions
   $ ttc vehicles 504                  Live vehicle positions
 
@@ -412,7 +412,7 @@ nearbyCmd.action(
 
         if (isNaN(lat) || isNaN(lng)) {
           console.error(kleur.red("Invalid coordinates. Use format: lat,lng"));
-          console.error(kleur.dim("Example: ttc nearby 43.6426,-79.4002"));
+          console.error(kleur.dim("Example: ttc nearby 43.6453,-79.3806"));
           process.exit(1);
         }
       } else {

@@ -44,7 +44,7 @@ ttc vehicles 504                  # Live positions on a route
 ttc alerts                        # Service alerts
 ttc alerts --broad                # Include subway alerts
 ttc nearby                        # Auto-detect location (macOS)
-ttc nearby 43.6426,-79.4002       # Or provide coordinates
+ttc nearby 43.6453,-79.3806       # Or provide coordinates
 ttc stops 504                     # Active stops on a route
 ttc routes                        # List all surface routes
 ttc routes --type streetcar       # Filter by type
